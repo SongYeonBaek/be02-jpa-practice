@@ -23,10 +23,9 @@ public class BoardController {
         return ResponseEntity.ok().body(boardDto);
     }
 
-
     @RequestMapping(method = RequestMethod.POST, value = "/edit")
     public ResponseEntity<Object> edit(BoardDto boardDto){
-        if(boardService.view(boardDto)){
+        if(boardService.edit(boardDto)){
             return ResponseEntity.ok().body("게시물 수정 성공");
         }
         else {
@@ -36,7 +35,7 @@ public class BoardController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/delete")
     public ResponseEntity<Object> delete(BoardDto boardDto){
-        if(boardService.view(boardDto)){
+        if(boardService.delete(boardDto)){
             return ResponseEntity.ok().body("게시물 삭제 성공");
         }
         else {
@@ -46,7 +45,7 @@ public class BoardController {
 
         @RequestMapping(method = RequestMethod.POST, value = "/post")
     public ResponseEntity<Object> post(BoardDto boardDto){
-        if(boardService.view(boardDto)){
+        if(boardService.post(boardDto)){
             return ResponseEntity.ok().body("게시물 등록 성공");
         }
         else {

@@ -16,7 +16,7 @@ public class BoardService {
         return boardDao.read(id);
     }
 
-    /*
+
     public boolean post(BoardDto boardDto){
         return true;
     }
@@ -29,5 +29,5 @@ public class BoardService {
         return true;
     }
 
-     */
+
 }
