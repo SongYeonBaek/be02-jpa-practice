@@ -19,11 +19,11 @@ public class SwaggerConfig {
                 .select()
                 .apis(
                         RequestHandlerSelectors.basePackage("com.example.demo.member")
-                                .or(RequestHandlerSelectors.basePackage("com.example.demo.product"))
+//                                .or(RequestHandlerSelectors.basePackage("com.example.demo.product"))
                 )
                 .paths(PathSelectors.any())
                 .build()
-                .apiInfo(apiInfo("스프링 수업", "v1.0"));
+                .apiInfo(apiInfo("팜팜 PAMPAM", "v1.0"));
     }
 
     private ApiInfo apiInfo(String title, String version) {
