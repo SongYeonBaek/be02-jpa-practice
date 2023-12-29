@@ -2,55 +2,34 @@ package com.example.demo.member.service;
 
 import com.example.demo.member.model.Member;
 import com.example.demo.member.model.dto.MemberLoginReq;
+import com.example.demo.member.model.dto.MemberSignupReq;
 import com.example.demo.member.repository.MemberRepository;
-import com.example.demo.utils.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
-    private final PasswordEncoder passwordEncoder;
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
-    @Value("${jwt.secret-key}")
-    private String secretKey;
-
-    @Value("${jwt.token.expired-time-ms}")
-    private int expiredTimeMs;
-
-    public Member getMemberByEmail(String email) {
-        Optional<Member> result = memberRepository.findByEmail(email);
-        if(result.isPresent()){
-            return result.get();
-        }
-        return null;
+    public String signup(MemberSignupReq memberSignupReq){
+        Member member = memberSignupReq.toEntity();
+        memberRepository.save(member);
+        return "ok";
     }
 
     public String login(MemberLoginReq memberLoginReq) {
-        Member member = memberRepository.findByEmail(memberLoginReq.getEmail()).get();
-
-        if (passwordEncoder.matches(memberLoginReq.getPassword(), member.getPassword())) {
-            return JwtUtils.generateAccessToken(member.getEmail(), secretKey, expiredTimeMs);
+        Optional<Member> member = memberRepository.findByEmail(memberLoginReq.getEmail());
+        if(member.isPresent()){
+            return "ok";
         }
-
-        return null;
+        return "fail";
     }
 
-    public String kakaoLogin(String userName) {
-
-        return JwtUtils.generateAccessToken(userName, secretKey, expiredTimeMs);
-    }
-
-    public void kakaoSignup(String userName) {
-        memberRepository.save(Member.builder()
-                        .email(userName)
-                        .password(passwordEncoder.encode("kakao"))
-                        .authority("ROLE_USER")
-                .build());
-    }
 }
