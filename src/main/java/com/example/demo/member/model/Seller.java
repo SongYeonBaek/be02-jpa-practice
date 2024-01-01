@@ -1,6 +1,9 @@
 package com.example.demo.member.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -9,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Member  {
+public class Seller {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idx;
@@ -25,8 +28,9 @@ public class Member  {
     @Column(nullable = false, length = 15)
     private String pNum;
 
+    @Column(nullable = true, length = 10)
+    private String sellerNum;
+
     private String socialLogin = "x";
-
-
 
 }
